@@ -11,6 +11,11 @@
     <%= f.text_area :body, autofocus: true, autocomplete: "body" %>
   </div>
 
+  <div class="field">
+    <%= f.number_field :user_id, autofocus: true, autocomplete: "body",  value:  current_user.id, type: :hidden %>
+  </div>
+  
+
 
     <div class="actions">
     <%= f.submit "Submit post" %>

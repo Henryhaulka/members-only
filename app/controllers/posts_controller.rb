@@ -1,10 +1,8 @@
 class PostsController < ApplicationController
+    before_action :authenticate_user!, only: [:new, :create]
+
     def index
         @posts = Post.all
-    end
-
-    def show
-        @post = Post.find(params[:id])
     end
 
     def new
@@ -12,16 +10,25 @@ class PostsController < ApplicationController
     end
 
     def create
-        @post = Post.create(use_params)
+        @post = Post.new(post_params)
+
         if @post.save
-            redirect_to @post
+            redirect_to root_path
+
         else
             render :new
         end
     end
 
+    def destroy
+        @post = Post.find(params[:id])
+        @post.destroy
+    
+        redirect_to root_path
+      end
+
     private
-    def use_params
+    def post_params
         params.require(:post).permit(:title, :body, :user_id)
     end
 end
